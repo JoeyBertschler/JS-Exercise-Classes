@@ -39,11 +39,41 @@ class Airplane {
           + When an instance poops, its `stomach` should empty.
       - Give instances of Person a method `.toString()`:
           + It should return a string with `name` and `age`. Example: "Mary, 50"
+
+          (9 total including foo aka. the test)     
+    × [5] can eat up to 10 foods (4 ms)
+    × [6] can eat no more than 10 foods
+    × [7] can poop to empty stomach (1 ms)
+    × [8] can state name and age (2 ms)
   */
-  
+
  class Person {
-    
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
   }
+
+  eat(someFood) {
+    if (this.stomach.length < 10) {
+    this.stomach.push(someFood)
+    }
+  }
+
+  poop() {
+    this.stomach = []
+  }
+
+  toString(name, age) {
+    //return `${name}", " ${age}`
+    //return `${"name, "} ${"age"}`
+    //return `${"name"}, ${"age"}`
+    //return `${name}, ${age}`
+    //return this.toString(name, age)
+    //return this.toString(`${name}", " ${age}`)
+    return `${this.name}, ${this.age}`;
+  }
+}
   
   /*
     TASK 2
@@ -60,9 +90,18 @@ class Airplane {
   */
   
  class Car {
-    
+  constructor(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
   }
   
+  fill(gallons){
+    this.tank.push(gallons)
+  }
+
+ }
   /*
     TASK 3
       - Write a Lambdasian class.
