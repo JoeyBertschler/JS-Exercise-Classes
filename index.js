@@ -243,8 +243,29 @@ class Instructor extends Lambdasian {
           + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
   */
  class Student extends Lambdasian{
-     
+     constructor(attributes){
+      super(attributes);
+      this.previousBackground = attributes.previousBackground;
+      this.className = attributes.className;
+      this.favSubjects = attributes.favSubjects;
+     }
+
+ listSubjects(){ //passed favSubject as arguments for the 2 attempts below, breaks it?
+   // return `Loving ${this.favSubject[0, 1, 2]}!`; why not just this.favSubject? why this.favSubject[] or [1,2,3] broken?
+   //`favSubjects`. i.e. an array of the student's favorite subjects ['HTML', 'CSS', 'JS']
+   //return `Loving ${this.favSubject[0]}, ${this.favSubject[1]}, ${this.favSubject[2]}!`; 
+   return `Loving ${this.favSubject[0]}, ${this.favSubject[1]}, ${this.favSubject[2]}!`;
  }
+ PRAssignment(subject){
+   return `${this.name} has submitted a PR for ${subject}`;
+// return `${subject.name} has submitted a PR for ${subject}`; <--- why does this not work?
+ }
+
+ sprintChallenge(subject){
+  return `${this.name} has begun sprint challenge on ${subject}`; // <--- same Q as comment above
+ }
+
+}
   
   /*
     TASK 6
