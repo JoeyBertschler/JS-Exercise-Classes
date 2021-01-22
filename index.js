@@ -39,12 +39,6 @@ class Airplane {
           + When an instance poops, its `stomach` should empty.
       - Give instances of Person a method `.toString()`:
           + It should return a string with `name` and `age`. Example: "Mary, 50"
-
-          (9 total including foo aka. the test)     
-    × [5] can eat up to 10 foods (4 ms)
-    × [6] can eat no more than 10 foods
-    × [7] can poop to empty stomach (1 ms)
-    × [8] can state name and age (2 ms)
   */
 
  class Person {
@@ -56,21 +50,21 @@ class Airplane {
 
   eat(someFood) {
     if (this.stomach.length < 10) {
-    this.stomach.push(someFood)
+    this.stomach.push(someFood);
     }
   }
 
   poop() {
-    this.stomach = []
+    this.stomach = [];
   }
 
   toString(name, age) {
-    //return `${name}", " ${age}`
-    //return `${"name, "} ${"age"}`
-    //return `${"name"}, ${"age"}`
-    //return `${name}, ${age}`
-    //return this.toString(name, age)
-    //return this.toString(`${name}", " ${age}`)
+    //return `${name}", " ${age}`;
+    //return `${"name, "} ${"age"}`;
+    //return `${"name"}, ${"age"}`;
+    //return `${name}, ${age}`;
+    //return this.toString(name, age);
+    //return this.toString(`${name}", " ${age}`);
     return `${this.name}, ${this.age}`;
   }
 }
@@ -89,7 +83,7 @@ class Airplane {
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
   
- class Car {
+class Car {
   constructor(model, milesPerGallon) {
     this.model = model;
     this.milesPerGallon = milesPerGallon;
@@ -97,11 +91,48 @@ class Airplane {
     this.odometer = 0;
   }
   
-  fill(gallons){
-    this.tank.push(gallons)
+  fill(gallons){ //add number to existing one
+    //return this.tank + gallons;
+    //this.tank + gallons; 
+    this.tank = this.tank + gallons;
+    //this would be prototype in es5 Car.prototype.fill() - means it's on this object created but stored separately, 
+    //would be outside of the class scope {}
   }
 
- }
+  drive(distance){ //add number to existing one
+
+    // doesn't work. many issues. moving on
+    // this.odometer = this.odometer + distance;
+    // this.tank = this.tank - (distance / this.milesPerGallon);
+    //   if (this.tank <= 0){
+    //   return `I ran out of fuel at ${this.odometer} miles!`
+    //   }
+
+    //loop while/for ->buggy and not recommended (compute) 
+    // but would work if fleshed out
+    //attempting math approach with if else
+    // Car.prototype.drive = function(){
+    //   while (this.stomach.length > 0){
+    //     this.stomach.pop();
+    //   } //while loop runs with condition until false
+    // }
+    
+    if (this.tank > (distance / this.milesPerGallon)){ //how much fuel is used 
+    //distance, tank/fuel, milesPerGallon, odometer
+    // assuming 10 gallons, 0.5 gallons/mile i.e. 2 miles/gallon, 20 miles distance
+    this.odometer = this.odometer + distance; //set odometer
+    this.tank = this.tank - (distance / this.milesPerGallon); //reduce fuel in tank
+    }
+
+    else if (this.tank <= (distance * this.milesPerGallon)){ //< or > always come first i.e. before the = (operator)
+    this.odometer = this.odometer + (this.tank * this.milesPerGallon);
+    // instead of calculating something with distance, we - knowing it wasnt enough - simply calc. how far the remaining fuel would have lasted
+    this.tank = 0; //runs out of fuel
+    return `I ran out of fuel at ${this.odometer} miles!`
+    }
+  }
+}
+
   /*
     TASK 3
       - Write a Lambdasian class.
@@ -114,27 +145,88 @@ class Airplane {
           + Speaking should return a phrase `Hello my name is {name}, I am from {location}`.
           + {name} and {location} of course come from the instance's own properties.
   */
- class Lambdasian {
-    
+
+// class Lambdasian {
+//   constructor(name, age, location){
+//     this.name = name;
+//     this.age = age;
+//     this.location = location;
+//   }
+
+//   speak(){
+//     return `Hello my name is ${this.name}, I am from ${this.location}`;
+//   }
+// }
+
+//realized too late that it said takes one SINGLE argument, rewriting...
+
+
+class Lambdasian {
+  constructor(attributes){
+    this.name = attributes.name;
+    this.age = attributes.age;
+    this.location = attributes.location; //attributes = object, we access with dot notation.
+                                         // it's not an array because those only have indexes
   }
+
+  speak(){
+    return `Hello my name is ${this.name}, I am from ${this.location}`;
+  }
+}
   
   /*
     TASK 4
       - Write an Instructor class extending Lambdasian.
       - Its constructor takes a single argument - an object with the following keys:
-          + All the keys used to initialize instances of Lambdasian.
+          + All the keys used to initialize instances of Lambdasian. // this is super(attributes) attributes being the same as what is extended from
           + `specialty`: what the instance of Instructor is good at, i.e. 'redux'
           + `favLanguage`: i.e. 'JavaScript, Python, Elm etc.'
           + `catchPhrase`: i.e. `Don't forget the homies`.
-      - The constructor calls the parent constructor passing it what it needs.
+      - The constructor calls the parent constructor passing it what it needs. //why is it phrased so so so confusingly. just say we do the extend thing
+      and elaborate on that. please
       - The constructor should also initialize `specialty`, `favLanguage` and `catchPhrase` properties on the instance.
       - Instructor instances have the following methods:
-          + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
+          + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' 
+          where subject is the param passed in.
           + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
   */
- class Instructor {
 
- }
+  //this doesn't work because of this. ? why no need here? "this would refence an object but we
+  //just want to reference the values passed in" ---I still don't get it but rewriting...
+//  class Instructor extends Lambdasian {
+//    constructor(attributes){
+//      super(attributes);
+//      this.specialty = attributes.specialty;
+//      this.favLanguage = attributes.favLanguage;
+//      this.catchPhrase = attributes.catchPhrase;
+//    }
+
+//    demo(subject){
+//     return `Today we are learning about ${this.subject}`
+//    }
+
+//    grade(student, subject){
+//     return `${this.student.name} receives a perfect score on ${this.subject}`
+//    }
+
+class Instructor extends Lambdasian {
+  constructor(attributes){
+    super(attributes);
+    this.specialty = attributes.specialty;
+    this.favLanguage = attributes.favLanguage;
+    this.catchPhrase = attributes.catchPhrase;
+  }
+
+  demo(subject){
+   return `Today we are learning about ${subject}`;
+  }
+
+  grade(student, subject){
+   return `${student.name} receives a perfect score on ${subject}`;
+  }
+}
+
+//  }
   /*
     TASK 5
       - Write a Student class extending Lambdasian.
@@ -150,7 +242,7 @@ class Airplane {
           + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
           + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
   */
- class Student {
+ class Student extends Lambdasian{
      
  }
   
