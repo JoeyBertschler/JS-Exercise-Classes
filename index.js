@@ -210,9 +210,10 @@ class Lambdasian {
 //    }
 
 class Instructor extends Lambdasian {
-  constructor(attributes){
+  
+  constructor(attributes){ //this is basically attributes now while super is before as in attributesNow/before
     super(attributes);
-    this.specialty = attributes.specialty;
+    this.specialty = attributes.specialty; // if array attributes[1]
     this.favLanguage = attributes.favLanguage;
     this.catchPhrase = attributes.catchPhrase;
   }
@@ -251,10 +252,14 @@ class Instructor extends Lambdasian {
      }
 
  listSubjects(){ //passed favSubject as arguments for the 2 attempts below, breaks it?
-   // return `Loving ${this.favSubject[0, 1, 2]}!`; why not just this.favSubject? why this.favSubject[] or [1,2,3] broken?
+   //return `Loving ${this.favSubjects[0, 1, 2]}!`; // why not just this.favSubject? why this.favSubject[] or [1,2,3] broken?
    //`favSubjects`. i.e. an array of the student's favorite subjects ['HTML', 'CSS', 'JS']
-   //return `Loving ${this.favSubject[0]}, ${this.favSubject[1]}, ${this.favSubject[2]}!`; 
-   return `Loving ${this.favSubject[0]}, ${this.favSubject[1]}, ${this.favSubject[2]}!`;
+   //return `Loving ${this.favSubjects[0]}, ${this.favSubjects[1]}, ${this.favSubjects[2]}!`; 
+   //return `Loving ${this.favSubjects[0]}, ${this.favSubjects[1]}, ${this.favSubjects[2]}!`;
+  // return `Loving ${this.favSubjects[0]}, ${this.favSubjects[1]}, ${this.favSubjects[2]}!`; //really need someone to explain me the syntax
+  return `Loving ${this.favSubjects}!`;
+   //and more effective ways, this seems too manual apssing the idnexes one by one
+   //also what if I don't know how many?
  }
  PRAssignment(subject){
    return `${this.name} has submitted a PR for ${subject}`;
@@ -264,7 +269,6 @@ class Instructor extends Lambdasian {
  sprintChallenge(subject){
   return `${this.name} has begun sprint challenge on ${subject}`; // <--- same Q as comment above
  }
-
 }
   
   /*
@@ -277,11 +281,25 @@ class Instructor extends Lambdasian {
       - Its constructor calls the parent constructor passing to it what it needs.
       - The constructor should also initialize `gradClassName` and `favInstructor` properties on the instance.
       - ProjectManager instances have the following methods:
-          + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
-          + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
+          + `standUp` a method that takes in a slack channel and returns
+           `{name} announces to {channel}, @channel standy times!`
+          + `debugsCode` a method that takes in a student object and a 
+          subject and returns `{name} debugs {student.name}'s code on {subject}`
   */
- class ProjectManager {
-     
+ class ProjectManager extends Instructor{
+     constructor(arg){
+      super(arg)
+      this.gradClassName = arg.gradClassName;
+      this.favInstructor = arg.favInstructor;
+     }
+
+     standUp(channel){
+      return `${this.name} announces to ${channel}, @channel standy times!`;
+     }
+
+     debugsCode(student, subject){
+      return `${this.name} debugs ${student.name}'s code on ${subject}`;
+     }
  }
   /*
     STRETCH PROBLEM (no tests!)
